@@ -15,8 +15,8 @@ sp = spotipy.Spotify(
         client_secret=SPOTIPY_CLIENT_SECRET,
     )
 )
-
 sp.user = "s7df1bggy7vp04apvg6dglu0t" #C'est moi wesh
+
 
 def get_playlist_tracks(username,playlist_id): #Get every songs from a playlist (spotipy allows only 100 songs/request)
     results = sp.user_playlist_tracks(username,playlist_id)
@@ -162,50 +162,13 @@ def findAndAdd(phantasma, findings):
                 except:
                     writer.writerow(['weirdCharacter', val[1]])
 
-
-def playlist(name,copy):
-
-
-    assert type(name) == str, 'Le nom doit être un string'
-
-
-    playlists = sp.current_user_playlists()['items']
-    for i in range(len(playlists)):
-        if playlists[i]['name'] == name:
-            findAndAdd(playlists[i],get_playlist_tracks(sp.user,copy))
-            print("Playlist already exists, added songs to it")
-            return
-
-    sp.user_playlist_create(sp.user,name)
-    playlists = sp.current_user_playlists()['items']
-    
-    index = True
-    for i in range(len(playlists)):
-        if playlists[i]['name'] == name:
-            index = i
-    if index:
-        print("Erreur : La playlist ne s'est pas créée")
-        return
-
-    c = get_playlist_tracks(sp.user,copy)
-    id = []
-    for song in c:
-        id.append(song['track']['uri'])
-
-    
-    while(len(id) > 0):
-        sp.playlist_add_items(playlists[index]['id'], id[:100])
-        id = id[100:]
-
 copy = '6STUpuSD8zGBWK4maMHVWO' #Findings la playlist d'hugo
-# copy = '1L9usNAScb7P2yb1gQeMR8' #SayLess ma playlist
-
-# playlist('Test',copy) #Pour créer une playlist
 
 playlists = sp.current_user_playlists()['items']
 for i in range(len(playlists)):
     if playlists[i]['name'] == 'Phantasma':
         index = i
+
 
 findAndAdd(playlists[index],get_playlist_tracks(sp.user,copy))
 
