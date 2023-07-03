@@ -141,8 +141,13 @@ def findAndAdd(phantasma, findings):
 
 
     moins = []
+    print("newMoinsPlaylist : ", len(newMoinsPlaylist))
+    print("copynewMoinsPlaylistID : ", len(copynewMoinsPlaylistID))
     for i in range(len(newMoinsPlaylist)):
-        moins.append([newMoinsPlaylist[i],copynewMoinsPlaylistID[i]])
+        try :
+            moins.append([newMoinsPlaylist[i], copynewMoinsPlaylistID[i]])
+        except:
+            ...
     try:
         os.remove("MoinSongs.csv")
         with open('MoinSongs.csv', 'w', encoding='utf-8') as creating_new_csv_file: 
@@ -163,6 +168,7 @@ def findAndAdd(phantasma, findings):
                     writer.writerow(['weirdCharacter', val[1]])
 
 copy = '6STUpuSD8zGBWK4maMHVWO' #Findings la playlist d'hugo
+# copy = "7B2yC8hRrdKrWbfyd37r7j" #playlist de Test
 
 playlists = sp.current_user_playlists()['items']
 for i in range(len(playlists)):
